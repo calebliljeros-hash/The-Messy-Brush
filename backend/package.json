@@ -1,7 +1,7 @@
 {
-  "name": "devqa-server",
+  "name": "artwork-server",
   "version": "1.0.0",
-  "description": "DevQ&A Backend API",
+  "description": "Artwork Backend API",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
