@@ -29,9 +29,6 @@ class Order
   status!: "pending" | "shipped" | "delivered" | "cancelled";
   paymentMethod!: string;
   shippingAddress!: string;
-
-  declare user?: User;
-  declare items?: Item[];
 }
 
 // Initialize the Order model

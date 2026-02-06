@@ -144,7 +144,7 @@ const seedData = async () => {
      console.log("✅ orders created successfully");
 
     // Verify the data with associations
-    console.log("\n📊 Verifying data with associations...\n");
+    /*console.log("\n📊 Verifying data with associations...\n");
 
     const authorsWithBooks = await Author.findAll({
       include: [Book],
@@ -160,7 +160,7 @@ const seedData = async () => {
         console.log(`   📘 ISBN: ${author.Book.isbn}`);
       }
       console.log("");
-    });
+    });*/
 
     console.log("✅ Database seeded successfully!");
     console.log("🚀 You can now run: npm run dev");
