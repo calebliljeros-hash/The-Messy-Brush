@@ -5,8 +5,8 @@ import sequelize, { testConnection } from "./config/database";
 
 import authRoutes from "./routes/authRoutes";
 import itemsRoutes from "./routes/itemsRoutes";
-import ordersRoutes from "./routes/ordersRoutes";
-import usersRoutes from "./routes/usersRoutes";
+//import ordersRoutes from "./routes/ordersRoutes";
+//import usersRoutes from "./routes/usersRoutes";
 
 import Item from "./models/Item";
 import Order from "./models/Order";
@@ -29,8 +29,8 @@ app.use(express.json());
 // TODO: Add routes
 app.use("/api/auth", authRoutes);
 app.use("/api/items", itemsRoutes);
-app.use("/api/orders", ordersRoutes);
-app.use("/api/users", usersRoutes);
+//app.use("/api/orders", ordersRoutes);
+//app.use("/api/users", usersRoutes);
 
 // Add a test route
 app.get("/api/health", (req, res) =>
