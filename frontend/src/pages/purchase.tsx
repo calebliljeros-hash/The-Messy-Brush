@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../services/api'
-import { useAuth } from '../context/authcontext'
+import { useAuth } from '../context/AuthContext'
 
 interface Item {
   id: number
