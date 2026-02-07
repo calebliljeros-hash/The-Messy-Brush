@@ -1,6 +1,3 @@
-export const useAuth = () => useContext(AuthContext)
-
-
 import {
   createContext,
   useContext,
@@ -23,6 +20,7 @@ interface AuthContextType {
   logout: () => void
 }
 
+// Create context with undefined default so we can guard against misuse
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 interface AuthProviderProps {
@@ -71,9 +69,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext)
-  if (!context) {
+  if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider')
   }
   return context
 }
-
