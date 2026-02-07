@@ -1,7 +1,5 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../config/database";
-import User from "./User";
-import Item from "./Item";
 
 // Define the attributes for the Order model
 interface OrderAttributes {
@@ -23,12 +21,12 @@ class Order
   extends Model<OrderAttributes, OrderCreationAttributes>
   implements OrderAttributes
 {
-  id!: number;
-  orderDate!: Date;
-  userId!: number;
-  status!: "pending" | "shipped" | "delivered" | "cancelled";
-  paymentMethod!: string;
-  shippingAddress!: string;
+  public id!: number;
+  public orderDate!: Date;
+  public userId!: number;
+  public status!: "pending" | "shipped" | "delivered" | "cancelled";
+  public paymentMethod!: string;
+  public shippingAddress!: string;
 }
 
 // Initialize the Order model
@@ -53,7 +51,6 @@ Order.init(
     },
     userId: {
       type: DataTypes.INTEGER,
-      references: { model: User, key: "id" },
       allowNull: false,
     },
     status: {
@@ -78,24 +75,5 @@ Order.init(
     timestamps: true,
   },
 );
-
-// Define associations
-
-Order.belongsTo(User, {
-  foreignKey: "userId",
-  as: "user",
-});
-User.hasMany(Order, {
-  foreignKey: "userId",
-  as: "orders",
-});
-Order.hasMany(Item, {
-  foreignKey: "orderId",
-  as: "items",
-});
-Item.belongsTo(Order, {
-  foreignKey: "orderId",
-  as: "order",
-});
 
 export default Order;
