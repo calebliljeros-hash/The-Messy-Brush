@@ -4,6 +4,8 @@ import { useAuth } from "../context/AuthContext"
 
 import Hero from "../components/Hero"
 import ArtCard from "../components/ArtCard"
+import { useNavigate } from "react-router-dom"
+
 
 interface Item {
   id: number
@@ -18,6 +20,7 @@ const Home = () => {
   const [error, setError] = useState("")
 
   const { isAuthenticated, logout, user } = useAuth()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -63,6 +66,12 @@ const Home = () => {
           ))}
         </div>
       )}
+
+      <footer className="gallery-footer">
+        {isAuthenticated && (
+            <button onClick={() => navigate("/leavefeedback")}>Feedback</button>
+        )}
+      </footer>
     </div>
   )
 }

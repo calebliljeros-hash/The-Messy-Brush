@@ -10,8 +10,6 @@ import ProtectedRoute from "./components/ProtectedRoute"
 
 
 const App = () => {
-  const { isAuthenticated } = useAuth()
-
   return (
     <Routes>
       {/* Shared layout */}
