@@ -1,3 +1,4 @@
+import path from "path"
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -31,6 +32,12 @@ app.use("/api/auth", authRoutes);
 app.use("/api/items", itemsRoutes);
 //app.use("/api/orders", ordersRoutes);
 //app.use("/api/users", usersRoutes);
+
+// Serve static files from backend/public
+app.use(
+  "/images",
+  express.static(path.join(__dirname, "../public/images"))
+)
 
 // Add a test route
 app.get("/api/health", (req, res) =>
