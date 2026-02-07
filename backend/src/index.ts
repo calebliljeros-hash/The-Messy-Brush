@@ -5,7 +5,7 @@ import sequelize, { testConnection } from "./config/database";
 
 import authRoutes from "./routes/authRoutes";
 import itemsRoutes from "./routes/itemsRoutes";
-//import ordersRoutes from "./routes/ordersRoutes";
+import ordersRoutes from "./routes/ordersRoutes";
 //import usersRoutes from "./routes/usersRoutes";
 
 import Item from "./models/Item";
@@ -19,35 +19,35 @@ const PORT = process.env.PORT || 4000;
 
 // Add middleware
 app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  }),
+    cors({
+      origin: "http://localhost:5173",
+      credentials: true,
+    }),
 );
 app.use(express.json());
 
 // TODO: Add routes
 app.use("/api/auth", authRoutes);
 app.use("/api/items", itemsRoutes);
-//app.use("/api/orders", ordersRoutes);
+app.use("/api/orders", ordersRoutes);
 //app.use("/api/users", usersRoutes);
 
 // Add a test route
 app.get("/api/health", (req, res) =>
-  res.json({ status: "ok", message: "Artwork API is running!" }),
+    res.json({ status: "ok", message: "Artwork API is running!" }),
 );
 
 // Error handling middleware
 app.use(
-  (
-    err: any,
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction,
-  ) => {
-    console.error(err.stack);
-    res.status(500).json({ message: "Something went wrong!" });
-  },
+    (
+        err: any,
+        req: express.Request,
+        res: express.Response,
+        next: express.NextFunction,
+    ) => {
+      console.error(err.stack);
+      res.status(500).json({ message: "Something went wrong!" });
+    },
 );
 
 // Start server function
