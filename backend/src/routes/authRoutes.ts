@@ -95,6 +95,7 @@ router.post('/login', async (req, res) => {
             return res.status(500).json({ error: 'Server configuration error' })
         }
 
+        // @ts-ignore
         const token = jwt.sign(
             {
                 userId: user.id,
