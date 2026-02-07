@@ -4,7 +4,7 @@ import { apiRequest } from '../services/api'
 import { useAuth } from '../context/authcontext'
 
 const LeaveFeedback = () => {
-  const [artId, setArtId] = useState('')
+  const [orderId, setOrderId] = useState('')
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
@@ -23,14 +23,14 @@ const LeaveFeedback = () => {
     }
 
     try {
-      await apiRequest(`/feedback/${artId}`, {
+      await apiRequest(`/feedback/${orderId}`, {
         method: 'POST',
         token,
         body: JSON.stringify({ message }),
       })
       setSuccess('Feedback submitted!')
       setMessage('')
-      setArtId('')
+      setOrderId('')
       // Optional: navigate back to home or refresh feedback list
       navigate('/')
     } catch (err: any) {
@@ -50,8 +50,8 @@ const LeaveFeedback = () => {
           <label>Art Item ID</label>
           <input
             type="text"
-            value={artId}
-            onChange={(e) => setArtId(e.target.value)}
+            value={orderId}
+            onChange={(e) => setOrderId(e.target.value)}
             required
           />
         </div>

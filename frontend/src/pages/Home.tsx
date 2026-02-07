@@ -44,8 +44,9 @@ const Home = () => {
             </>
           ) : (
             <>
-              <span>Welcome, {user?.username}</span> |{' '}
+              <span>Welcome, {user?.username}</span>
               <button onClick={logout}>Logout</button>
+              <Link to="/leavefeedback">Leave Feedback</Link>
             </>
           )}
         </nav>

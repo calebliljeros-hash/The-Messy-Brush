@@ -1,10 +1,10 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { useAuth } from './context/authcontext'
+import { useAuth } from './context/AuthContext'
 
-import Home from './pages/home'
-import Login from './pages/login'
-import Register from './pages/register'
-import LeaveFeedback from './pages/leavefeedback'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import LeaveFeedback from './pages/LeaveFeedback'
 
 const App = () => {
   const { isAuthenticated } = useAuth()
