@@ -1,26 +1,43 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
-import { useAuth } from './context/AuthContext'
+import { Routes, Route, Navigate } from "react-router-dom"
+import Layout from "./components/Layout"
 
-import Home from './pages/Home'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import LeaveFeedback from './pages/LeaveFeedback'
+import Home from "./pages/Home"
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import LeaveFeedback from "./pages/LeaveFeedback"
+import Purchase from "./pages/purchase" // example if you add this page
+import ProtectedRoute from "./components/ProtectedRoute"
+
 
 const App = () => {
   const { isAuthenticated } = useAuth()
 
   return (
     <Routes>
-      {/* Public routes */}
-      <Route path="/" element={<Home />} />
+      {/* Shared layout */}
+      <Route path="/" element={<Layout />} />
+      {/* Public */}
+      <Route index element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* Protected route */}
+
+      {/* Protected routes */}
       <Route
         path="/leavefeedback"
         element={
-          isAuthenticated ? <LeaveFeedback /> : <Navigate to="/login" />
+          <ProtectedRoute>
+            <LeaveFeedback />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/purchase/:id"
+        element={
+          <ProtectedRoute>
+            <Purchase />
+          </ProtectedRoute>
         }
       />
 

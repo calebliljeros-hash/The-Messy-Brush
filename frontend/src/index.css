@@ -1,4 +1,4 @@
-/* Reset & base styles */
+/* ========== RESET & BASE ========== */
 * {
   margin: 0;
   padding: 0;
@@ -13,7 +13,7 @@ body {
   min-height: 100vh;
 }
 
-/* Links */
+/* ========== LINK STYLES ========== */
 a {
   color: #2c7a7b;
   text-decoration: none;
@@ -23,57 +23,154 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Headers */
+/* ========== GLOBAL HEADERS ========== */
 h1, h2, h3 {
   margin-bottom: 0.5rem;
   color: #1a202c;
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
+  margin-top: 0.5rem;
+  text-align: center;
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  text-align: center;
 }
 
 h3 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
-/* Layout */
-header {
-  padding: 1rem 2rem;
+/* ================= HEADER / NAV =============== */
+header,
+.site-header {
   background-color: #fff;
+  padding: 1rem 2rem;
   border-bottom: 1px solid #ddd;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-nav a,
-nav button {
+.site-nav a,
+.site-nav button {
   margin-left: 1rem;
+  font-weight: 500;
 }
 
-/* Buttons */
-button {
-  background-color: #2c7a7b;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
+/* ========== BUTTON BASE ========== */
+button,
+.btn {
   cursor: pointer;
+  padding: 0.6rem 1.2rem;
   border-radius: 4px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
   transition: background-color 0.2s;
 }
 
+/* PRIMARY BUTTON */
+.btn-primary,
+button {
+  background-color: #2c7a7b;
+  color: #fff;
+}
+
+.btn-primary:hover,
 button:hover {
   background-color: #285e61;
 }
 
-/* Forms */
+/* SECONDARY BUTTON */
+.btn-secondary {
+  background-color: #ccc;
+  color: #333;
+}
+
+/* ========== HERO SECTION ========== */
+.hero-section {
+  background-image: url("/images/hero-art.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: #080000;
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ========== MAIN CONTENT CONTAINER ========== */
+.page-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 1rem;
+}
+
+/* ========== GALLERY GRID ========== */
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.6rem;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+/* ========== CARD COMPONENT ========== */
+.art-card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.art-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.art-image {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.price {
+  font-size: 1.15rem;
+  font-weight: bold;
+  color: #2c7a7b;
+}
+
+/* ========== ERROR / EMPTY STATES ========== */
+.error-message,
+.no-items {
+  text-align: center;
+  color: #cc0000;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+/* ========== FORMS ========== */
 form {
-  max-width: 400px;
+  max-width: 450px;
   margin: 2rem auto;
   padding: 1rem;
   background-color: #fff;
@@ -94,9 +191,18 @@ label {
 input,
 textarea {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.6rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-
+/* ========== FOOTER ========== */
+footer,
+.footer-section {
+  background-color: #f7f7f7;
+  text-align: center;
+  padding: 1.8rem;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  color: #555;
+}
