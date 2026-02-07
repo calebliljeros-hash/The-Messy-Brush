@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { apiRequest } from '../services/api'
-import { useAuth } from '../context/authcontext'
+import { useAuth } from '../context/AuthContext'
 
 const LeaveFeedback = () => {
   const [artId, setArtId] = useState('')
