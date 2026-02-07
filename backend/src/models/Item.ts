@@ -11,12 +11,12 @@ interface ItemAttributes {
   imageUrl: string;
   status: "available" | "sold" | "reserved";
   artworkDate?: Date;
-  orderID?: number;
+  orderId?: number;
 }
 // Define which attributes are optional when creating a new Item
 interface ItemCreationAttributes extends Optional<
   ItemAttributes,
-  "id" | "medium" | "artworkDate" | "orderID"
+  "id" | "medium" | "artworkDate" | "orderId"
 > {}
 
 // Define the Item model class
@@ -24,15 +24,15 @@ class Item
   extends Model<ItemAttributes, ItemCreationAttributes>
   implements ItemAttributes
 {
-  id!: number;
-  title!: string;
-  artistName!: string;
-  medium!: string;
-  price!: number;
-  imageUrl!: string;
-  status!: "available" | "sold" | "reserved";
-  artworkDate!: Date;
-  orderID!: number;
+  public id!: number;
+  public title!: string;
+  public artistName!: string;
+  public medium!: string;
+  public price!: number;
+  public imageUrl!: string;
+  public status!: "available" | "sold" | "reserved";
+  public artworkDate!: Date;
+  public orderId!: number;
 }
 
 // Initialize the Item model
@@ -89,15 +89,15 @@ Item.init(
     },
     artworkDate: {
       type: DataTypes.DATE,
-      allowNull: true, 
+      allowNull: true,
       validate: {
         isDate: true,
       },
     },
-    orderID: {
+    orderId: {
       type: DataTypes.INTEGER,
       allowNull: true,
-    }
+    },
   },
   {
     sequelize,
@@ -106,6 +106,5 @@ Item.init(
     timestamps: true,
   },
 );
-
 
 export default Item;
