@@ -50,6 +50,16 @@ router.put('/:id/feedback', authenticateToken, async (req, res) => {
         console.error('Feedback error:', error.message)
         res.status(500).json({ error: 'Failed to submit feedback' })
     }
+    router.post("/", async (req, res) => {
+        try {
+            const order = await Order.create(req.body);
+            res.status(201).json(order);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Server error" });
+        }
+
+    });
 })
 
 export default router
