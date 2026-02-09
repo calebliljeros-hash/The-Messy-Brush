@@ -1,6 +1,7 @@
 import Item from "./Item";
 import Order from "./Order";
 import User from "./User";
+import OrderItem from "./OrderItem";
 
 Order.belongsTo(User, {
   foreignKey: "userId",
@@ -11,15 +12,21 @@ User.hasMany(Order, {
   as: "orders",
   onDelete: "CASCADE",                                                      
 });
-Item.belongsTo(Order, {
+
+// Order ↔ Item (Many-to-Many)
+Order.belongsToMany(Item, {
+  through: OrderItem,
   foreignKey: "orderId",
-  as: "order",
-});
-Order.hasMany(Item, {
-  foreignKey: "orderId",
+  otherKey: "itemId",
   as: "items",
-  onDelete: "CASCADE",
+});
+
+Item.belongsToMany(Order, {
+  through: OrderItem,
+  foreignKey: "itemId",
+  otherKey: "orderId",
+  as: "orders",
 });
 
 // Export all models
-export { Item, Order, User };
+export { Item, Order, User, OrderItem };

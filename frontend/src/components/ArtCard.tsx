@@ -18,7 +18,7 @@ const ArtCard = ({
   isAuthenticated,
 }: ArtCardProps) => {
   // Build root path to public folder
-  const imgSrc = imageUrl ? `/${imageUrl}` : "/placeholder.png" // fallback
+  const imgSrc = imageUrl ? `${imageUrl}` : "/Placeholder.png" // fallback
 
   return (
     <div className="art-card">

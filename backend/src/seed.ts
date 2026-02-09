@@ -1,5 +1,5 @@
 import sequelize from "./config/database";
-import {Item, Order, User} from "./models/index";
+import {Item, Order, OrderItem, User} from "./models/index";
 
 // Sample data: Item, Order, User
 const seedData = async () => {
@@ -81,7 +81,7 @@ const seedData = async () => {
         artistName: "Jane Doe", 
         medium: "Oil on Canvas", 
         price: 500, 
-        imageUrl: "/images/A_Colorful_Walk_in_the_Park.webp",
+        imageUrl: "/A_Colorful_Walk_in_the_Park.webp",
         status: "available",
         artworkDate: new Date("2020-05-15"),
       },
@@ -90,27 +90,27 @@ const seedData = async () => {
         artistName: "John Smith",
         medium: "Watercolor",
         price: 750,
-        imageUrl: "/images/Bird_Perching_on_Tree.webp",
+        imageUrl: "/Bird_Perching_on_Tree.webp",
         status: "sold",
         artworkDate: new Date("2019-08-22"),
-        orderId: orders[0].id,
+        
       },
       {
         title: "Element of Art",
         artistName: "Emily Johnson",
         medium: "Acrylic",
         price: 1200,
-        imageUrl: "/images/Element_of_Art.webp",
+        imageUrl: "/Element_of_Art.webp",
         status: "reserved",
         artworkDate: new Date("2021-11-10"),
-        orderId: orders[1].id,
+        
       },
       {
         title: "Spiral Artwork",
         artistName: "Robert Lee",
         medium: "Oil on Canvas",
         price: 950,
-        imageUrl: "/images/Spiral_Artwork.jpg",
+        imageUrl: "/Spiral_Artwork.jpg",
         status: "available",
         artworkDate: new Date("2018-03-05"),
       },
@@ -119,14 +119,49 @@ const seedData = async () => {
         artistName: "Sophia Brown",
         medium: "Digital",
         price: 650,
-        imageUrl: "/images/Transparency.webp",
+        imageUrl: "/Transparency.webp",
         status: "sold",
         artworkDate: new Date("2022-07-19"),
-        orderId: orders[0].id,
+        
       }
     ]);
 
     console.log("✅ Items created successfully");
+
+    // Create Items
+    console.log("📝 Creating items...");
+
+    const orderItems = await OrderItem.bulkCreate([
+      {
+        orderId: 1,
+        itemId: 1,
+      },
+      {
+        orderId: 1,
+        itemId: 2,
+      },
+      {
+        orderId: 2,
+        itemId: 3,
+        quantity: 2
+      },
+      {
+        orderId: 3,
+        itemId: 4,
+      },
+      {
+        orderId: 4,
+        itemId: 3,
+      },
+      {
+        orderId: 5,
+        itemId: 3,
+      },
+      {
+        orderId: 6,
+        itemId: 5,
+      },
+    ]);
 
     //Verify the data with associations
     console.log("\n📊 Verifying data with associations...\n");
@@ -151,26 +186,37 @@ const seedData = async () => {
       }
       console.log("");
     });
-     const itemsWithOrders = await Order.findAll({
-       include: [
-         {
-           model: Item,
-           as: "items",
-         },
-       ],
-     });
 
-     itemsWithOrders.forEach((order: any) => {
-       console.log(`🦁 ${order.id}`);
-       console.log(`🦁 ${order.orderDate}`);
-       if (order.Item) {
-         console.log(
-           `🎨 Items: "${order.Item.title}" (${order.Item.price})`,
-         );
-         console.log(`🪟 Status: ${order.Item.status}`);
-       }
-       console.log("");
-     });
+    console.log("\n📊 Verifying OrderItem associations...\n");
+
+    const ordersWithItems = await Order.findAll({
+      include: [
+        {
+          model: Item,
+          as: "items",
+          through: {
+            attributes: ["quantity"],
+          },
+        },
+      ],
+    });
+
+    ordersWithItems.forEach((order: any) => {
+      console.log(`🧾 Order ID: ${order.id}`);
+
+      if (order.items && order.items.length > 0) {
+        order.items.forEach((item: any) => {
+          console.log(
+            `🖼️ Item ID: ${item.id} | 🔢 Quantity: ${item.OrderItem.quantity}`,
+          );
+        });
+      } else {
+        console.log("❌ No items linked to this order");
+      }
+
+      console.log("");
+    });
+     
 
     console.log("✅ Database seeded successfully!");
     console.log("🚀 You can now run: npm run dev");

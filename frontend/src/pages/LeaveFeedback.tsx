@@ -22,7 +22,7 @@ const LeaveFeedback = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const data = await apiRequest('/orders', { token })
+        const data = await apiRequest('/orders/my-orders', { token })
         setOrders(data)
       } catch (err: any) {
         setError(err.message || 'Failed to load orders')
@@ -46,7 +46,7 @@ const LeaveFeedback = () => {
     }
 
     try {
-      const data = await apiRequest(`/orders/${orderId}/feedback`, {
+        const data = await apiRequest(`/orders/${orderId}/feedback`, {
         method: 'PUT',
         token,
         body: JSON.stringify({ feedback }),
