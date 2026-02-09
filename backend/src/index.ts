@@ -7,7 +7,7 @@ import sequelize, { testConnection } from "./config/database";
 import authRoutes from "./routes/authRoutes";
 import itemsRoutes from "./routes/itemsRoutes";
 import ordersRoutes from "./routes/ordersRoutes";
-//import usersRoutes from "./routes/usersRoutes";
+import usersRoutes from "./routes/usersRoutes";
 
 import Item from "./models/Item";
 import Order from "./models/Order";
@@ -31,7 +31,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/items", itemsRoutes);
 app.use("/api/orders", ordersRoutes);
-//app.use("/api/users", usersRoutes);
+app.use("/api/users", usersRoutes);
 
 // Serve static files from backend/public
 app.use(

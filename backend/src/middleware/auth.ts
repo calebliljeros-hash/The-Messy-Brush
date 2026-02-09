@@ -38,6 +38,7 @@ export const authenticateToken = (
 
   try {
     const secret = process.env.JWT_SECRET
+    console.log("JWT_SECRET:", secret);
 
     if (!secret) {
       console.error('JWT_SECRET is not defined in environment variables')
@@ -51,7 +52,7 @@ export const authenticateToken = (
       userId: decoded.userId,
       email: decoded.email
     }
-
+    console.log("Authorization:", req.headers.authorization);
     next()
   } catch (error: any) {
     if (error.name === 'TokenExpiredError') {
