@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext"
 import Hero from "../components/Hero"
 import ArtCard from "../components/ArtCard"
 import { useNavigate } from "react-router-dom"
+import Footer from '../components/Footer' 
 
 
 interface Item {
@@ -67,11 +68,11 @@ const Home = () => {
         </div>
       )}
 
-      <footer className="gallery-footer">
+      <Footer className="gallery-footer">
         {isAuthenticated && (
             <button onClick={() => navigate("/leavefeedback")}>Feedback</button>
         )}
-      </footer>
+      </Footer>
     </div>
   )
 }

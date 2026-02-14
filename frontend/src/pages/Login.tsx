@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { apiRequest } from '../services/api'
 import { useAuth } from '../context/authcontext'
+import Footer from '../components/Footer'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -9,7 +10,7 @@ const Login = () => {
   const [error, setError] = useState('')
 
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const { login, isAuthenticated } = useAuth() // ✅ include isAuthenticated
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -29,7 +30,7 @@ const Login = () => {
   }
 
   return (
-    <div>
+    <div className="page-container">
       <h2>Login</h2>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -61,6 +62,15 @@ const Login = () => {
       <p>
         Don’t have an account? <Link to="/register">Register</Link>
       </p>
+
+      {/* Footer with optional feedback button */}
+      <Footer>
+        {isAuthenticated && (
+          <button onClick={() => navigate('/leavefeedback')}>
+            Feedback
+          </button>
+        )}
+      </Footer>
     </div>
   )
 }
