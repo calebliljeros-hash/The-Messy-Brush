@@ -19,29 +19,36 @@ export interface AuthResponse {
 // Item (Primary Content)
 // ==============================
 export interface Item {
-  id: number
-  title: string
-  description: string
-  price: number
-  imageUrl?: string
-  userId: number
-  createdAt: string
-  updatedAt: string
-  owner?: User // if backend includes owner info
+  id: number;
+  title: string;
+  // description: string
+  price: number;
+  artistName: string;
+  medium: string;
+  imageUrl?: string;
+  userId: number;
+  createdAt: string;
+  updatedAt: string;
+  status: "available" | "sold" | "reserved";
+  artworkDate?: Date;
+  owner?: User; // if backend includes owner info
 }
 
 // ==============================
 // Order (Secondary Content)
 // ==============================
 export interface Order {
-  id: number
-  userId: number
-  itemId: number
-  quantity: number
-  createdAt: string
-  updatedAt: string
-  item?: Item
-  user?: User
+  id: number;
+  orderDate?: Date;
+  userId: number;
+  itemId: number;
+  quantity: number;
+  paymentMethod?: string;
+  shippingAddress: string;
+  createdAt: string;
+  updatedAt: string;
+  item?: Item;
+  user?: User;
 }
 
 // ==============================

@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext'
 
 interface Item {
   id: number
-  title: string
+  title: string                            
   description: string
   price: number
   imageUrl?: string
@@ -19,6 +19,11 @@ const Purchase = () => {
   const [item, setItem] = useState<Item | null>(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  // NEW STATES
+  const [showCheckout, setShowCheckout] = useState(false)
+  const [paymentMethod, setPaymentMethod] = useState('')
+  const [shippingAddress, setShippingAddress] = useState('')
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -41,13 +46,27 @@ const Purchase = () => {
       return
     }
 
+    if (!paymentMethod) {
+      setError('Please select a payment method.')
+      return
+    }
+
+    if (!shippingAddress.trim()) {
+      setError('Please enter a shipping address.')
+      return
+    }
+
     setLoading(true)
     setError('')
 
     try {
-      await apiRequest(`/orders/${id}`, {
+      await apiRequest(`/orders/${item?.id}`, {
         method: 'POST',
         token,
+        body: JSON.stringify({
+        paymentMethod,
+        shippingAddress,
+    }),
       })
 
       alert('Purchase successful!')
@@ -83,13 +102,50 @@ const Purchase = () => {
               style={{ maxWidth: '200px' }}
             />
           )}
+
           <h3>{item.title}</h3>
-          <p>{item.description}</p>
           <p>${item.price.toFixed(2)}</p>
 
-          <button onClick={handlePurchase} disabled={loading}>
-            {loading ? 'Processing...' : 'Buy Now'}
-          </button>
+          {!showCheckout ? (
+            <button onClick={() => setShowCheckout(true)}>
+              Buy Now
+            </button>
+          ) : (
+            <div style={{ marginTop: '20px' }}>
+              {/* Payment Method */}
+              <div>
+                <label>Payment Method:</label>
+                <select
+                  value={paymentMethod}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                >
+                  <option value="">Select payment method</option>
+                  <option value="credit card">Credit Card</option>
+                  <option value="debit card">Debit Card</option>
+                  <option value="paypal">PayPal</option>
+                </select>
+              </div>
+
+              {/* Shipping Address */}
+              <div style={{ marginTop: '10px' }}>
+                <label>Shipping Address:</label>
+                <textarea
+                  value={shippingAddress}
+                  onChange={(e) => setShippingAddress(e.target.value)}
+                  placeholder="Enter your shipping address"
+                  rows={3}
+                />
+              </div>
+
+              <button
+                onClick={handlePurchase}
+                disabled={loading}
+                style={{ marginTop: '15px' }}
+              >
+                {loading ? 'Processing...' : 'Confirm Purchase'}
+              </button>
+            </div>
+          )}
         </div>
       ) : (
         <p>Loading item...</p>
