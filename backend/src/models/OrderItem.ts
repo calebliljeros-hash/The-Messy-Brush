@@ -4,7 +4,7 @@ import sequelize from "../config/database";
 interface OrderItemAttributes {
   orderId: number;
   itemId: number;
-  quantity?: number;
+  quantity: number;
 }
 interface OrderItemCreationAttributes extends Optional<
   OrderItemAttributes,
@@ -25,11 +25,19 @@ OrderItem.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      references: {
+        model: "orders",
+        key: "id",
+      },
     },
     itemId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      references: {
+        model: "items",
+        key: "id",
+      },
     },
     quantity: {
       type: DataTypes.INTEGER,

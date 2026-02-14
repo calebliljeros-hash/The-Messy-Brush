@@ -86,6 +86,7 @@ User.init(
       },
     },
     {
+      modelName: 'User',
       tableName: 'users',
       sequelize,
       timestamps: true,

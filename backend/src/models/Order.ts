@@ -4,7 +4,7 @@ import sequelize from "../config/database";
 // Define the attributes for the Order model
 interface OrderAttributes {
     id: number;
-    orderDate: Date;
+    orderDate?: Date;
     userId: number;
     status: "pending" | "shipped" | "delivered" | "cancelled";
     paymentMethod?: string;
@@ -14,7 +14,7 @@ interface OrderAttributes {
 // Define which attributes are optional when creating a new Order
 interface OrderCreationAttributes extends Optional<
     OrderAttributes,
-    "id" | "paymentMethod" | "feedback"
+    "id" | "paymentMethod" | "feedback" | "orderDate" 
 > {}
 
 // Define the Order model class
@@ -42,6 +42,7 @@ Order.init(
         orderDate: {
             type: DataTypes.DATE,
             allowNull: false,
+            defaultValue: new Date(),
             validate: {
                 isDate: true,
                 isNotFuture(value: Date) {
@@ -54,6 +55,10 @@ Order.init(
         userId: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "users",
+                key: "id",
+            }
         },
         status: {
             type: DataTypes.ENUM("pending", "shipped", "delivered", "cancelled"),

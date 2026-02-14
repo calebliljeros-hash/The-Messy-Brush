@@ -11,7 +11,7 @@ router.post('/register', async (req, res) => {
         // Validate required fields
         if (!username || !email || !password) {
             return res.status(400).json({
-                error: 'Missing required fields',
+                message: 'Missing required fields',
                 required: ['username', 'email', 'password']
             })
         }
@@ -48,11 +48,11 @@ router.post('/register', async (req, res) => {
         // Handle duplicate email
         if (error.name === 'SequelizeUniqueConstraintError') {
             return res.status(409).json({
-                error: 'Email already exists'
+                message: 'Email already exists'
             })
         }
 
-        res.status(500).json({ error: 'Failed to register user' })
+        res.status(500).json({ message: 'Failed to register user' })
     }
 })
 
@@ -63,7 +63,7 @@ router.post('/login', async (req, res) => {
         // Validate required fields
         if (!email || !password) {
             return res.status(400).json({
-                error: 'Email and password are required'
+                message: 'Email and password are required'
             })
         }
 
@@ -73,7 +73,7 @@ router.post('/login', async (req, res) => {
         if (!user) {
             // Don't reveal whether email exists or not (security best practice)
             return res.status(401).json({
-                error: 'Invalid email or password'
+                message: 'Invalid email or password'
             })
         }
 
@@ -82,7 +82,7 @@ router.post('/login', async (req, res) => {
 
         if (!isPasswordValid) {
             return res.status(401).json({
-                error: 'Invalid email or password'
+                message: 'Invalid email or password'
             })
         }
 
@@ -92,7 +92,7 @@ router.post('/login', async (req, res) => {
 
         if (!secret) {
             console.error('JWT_SECRET is not defined in environment variables')
-            return res.status(500).json({ error: 'Server configuration error' })
+            return res.status(500).json({ message: 'Server configuration error' })
         }
 
         // @ts-ignore
@@ -116,7 +116,7 @@ router.post('/login', async (req, res) => {
 
     } catch (error: any) {
         console.error('Login error:', error.message)
-        res.status(500).json({ error: 'Login failed' })
+        res.status(500).json({ message: 'Login failed' })
     }
 })
 
