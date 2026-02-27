@@ -1,52 +1,50 @@
-import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { apiRequest } from '../services/api'
-import { useAuth } from '../context/AuthContext'
+import { useState } from "react"
+import { useNavigate, Link } from "react-router-dom"
+import { apiRequest } from "../services/api"
+import { useAuth } from "../context/AuthContext"
+import Footer from "../components/Footer"
 
 const Register = () => {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
 
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const { login, isAuthenticated } = useAuth() // ✅ include isAuthenticated
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError('')
+    setError("")
 
-    // Basic client‑side checks
     if (!username || !email || !password) {
-      setError('All fields are required')
+      setError("All fields are required.")
       return
     }
 
     try {
-      const data = await apiRequest('/auth/register', {
-        method: 'POST',
+      const data = await apiRequest("/auth/register", {
+        method: "POST",
         body: JSON.stringify({ username, email, password }),
       })
 
-      // After successful registration, store token + user and redirect
       login(data.token, data.user)
-      navigate('/')
+      navigate("/")
     } catch (err: any) {
-      setError(err.message || 'Registration failed')
+      setError(err.message || "Registration failed")
     }
   }
 
   return (
-    <div>
+    <div className="page-container">
       <h2>Register</h2>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
 
       <form onSubmit={handleSubmit}>
         <div>
           <label>Username</label>
           <input
-            type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
@@ -73,12 +71,25 @@ const Register = () => {
           />
         </div>
 
-        <button type="submit">Create Account</button>
+        <button type="submit" className="btn btn-primary">
+          Create Account
+        </button>
       </form>
 
       <p>
         Already have an account? <Link to="/login">Login</Link>
       </p>
+
+      <Footer>
+        {isAuthenticated && (
+          <button
+            className="btn btn-secondary"
+            onClick={() => navigate("/leavefeedback")}
+          >
+            Leave Feedback
+          </button>
+        )}
+      </Footer>
     </div>
   )
 }

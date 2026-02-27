@@ -3,9 +3,11 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../services/api'
 import { useAuth } from '../context/AuthContext'
 
+import Footer from '../components/Footer' 
+
 interface Item {
   id: number
-  title: string                            
+  title: string
   description: string
   price: number
   imageUrl?: string
@@ -19,8 +21,6 @@ const Purchase = () => {
   const [item, setItem] = useState<Item | null>(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-
-  // NEW STATES
   const [showCheckout, setShowCheckout] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState('')
   const [shippingAddress, setShippingAddress] = useState('')
@@ -64,11 +64,10 @@ const Purchase = () => {
         method: 'POST',
         token,
         body: JSON.stringify({
-        paymentMethod,
-        shippingAddress,
-    }),
+          paymentMethod,
+          shippingAddress,
+        }),
       })
-
       alert('Purchase successful!')
       navigate('/')
     } catch (err: any) {
@@ -80,38 +79,39 @@ const Purchase = () => {
 
   if (!isAuthenticated) {
     return (
-      <div>
+      <div className="page-container">
         <h2>Must be logged in to purchase</h2>
         <p>Please log in or register to continue.</p>
+        <Footer /> {/* footer still shows even if not authorized */}
       </div>
     )
   }
 
   return (
-    <div>
+    <div className="page-container">
       <h2>Purchase Item</h2>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
 
       {item ? (
-        <div>
+        <div className="purchase-content">
           {item.imageUrl && (
             <img
               src={item.imageUrl}
               alt={item.title}
-              style={{ maxWidth: '200px' }}
+              className="art-image"
             />
           )}
 
           <h3>{item.title}</h3>
-          <p>${item.price.toFixed(2)}</p>
+          <p className="price">${item.price.toFixed(2)}</p>
 
           {!showCheckout ? (
-            <button onClick={() => setShowCheckout(true)}>
+            <button className="btn btn-primary" onClick={() => setShowCheckout(true)}>
               Buy Now
             </button>
           ) : (
-            <div style={{ marginTop: '20px' }}>
+            <div className="checkout-form">
               {/* Payment Method */}
               <div>
                 <label>Payment Method:</label>
@@ -127,7 +127,7 @@ const Purchase = () => {
               </div>
 
               {/* Shipping Address */}
-              <div style={{ marginTop: '10px' }}>
+              <div>
                 <label>Shipping Address:</label>
                 <textarea
                   value={shippingAddress}
@@ -138,9 +138,9 @@ const Purchase = () => {
               </div>
 
               <button
+                className="btn btn-primary"
                 onClick={handlePurchase}
                 disabled={loading}
-                style={{ marginTop: '15px' }}
               >
                 {loading ? 'Processing...' : 'Confirm Purchase'}
               </button>
@@ -150,6 +150,9 @@ const Purchase = () => {
       ) : (
         <p>Loading item...</p>
       )}
+
+      {/* Footer goes here */}
+      <Footer />
     </div>
   )
 }
